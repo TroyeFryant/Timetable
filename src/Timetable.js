@@ -103,15 +103,7 @@ let weekCourse = [
                 subject: "Php", //学科
                 major: "计算机科学与技术", //专业
                 class: "1702班", //班级
-            },
-            {
-                index: 11,
-                startTime: "08:00", //开始时间
-                endTime: "09:30", //结束时间
-                subject: "Php", //学科
-                major: "计算机科学与技术", //专业
-                class: "1702班", //班级
-            },
+            }
         ],
     },
     {
@@ -216,15 +208,7 @@ let weekCourse = [
                 subject: "物理", //学科
                 major: "计算机科学与技术", //专业
                 class: "1702班", //班级
-            },
-            {
-                index: 11,
-                startTime: "08:00", //开始时间
-                endTime: "09:30", //结束时间
-                subject: "语文", //学科
-                major: "计算机科学与技术", //专业
-                class: "1702班", //班级
-            },
+            }
         ],
     },
 

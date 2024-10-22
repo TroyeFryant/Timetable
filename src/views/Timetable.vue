@@ -25,7 +25,7 @@
         <thead>
           <tr>
             <!-- 这里可以放第几周 -->
-            <th></th>
+            <th style="color: red;font-size: 30px;">第???周</th>
             <th v-for="(item1, index1) in weeks" :key="index1">
               {{ "周" + numberToChinease(item1 + 1, "week") }}
             </th>
@@ -35,7 +35,7 @@
           <tr v-for="(item2, index2) in maxCourseLength" :key="index2">
             <td>
               <p>{{ "第" + numberToChinease(item2) + "节" }}</p>
-              <p></p>
+              <p>{{ class_time(index2) }}</p>
             </td>
             <template v-for="(item3, index3) in weeks">
               <td
@@ -97,13 +97,14 @@ export default {
   name: "Timetable",
   data() {
     return {
-      startTime: "2022.10.17",
-      endTime: "2022.10.23",
+      startTime: "",
+      endTime: "",
       colorList: [], //随机颜色
       weekCourse: [], // 课程详细课程、数量
       weeks: [], //头部周期
       maxCourseLength: 10, //最大课节数,
       count: 0, //上周、下周、本周选择器flag
+      class_time_list:['8:30-9:15','9:20-10:05','10:25-11:10','11:15-12:00','14:30-15:15','15:20-16:05','16:25-17:10','17:15-18:00','19:30-20:15','20:25-21:10']
     };
   },
   created() {
@@ -111,7 +112,7 @@ export default {
     this.colorList = colorList;
     this.sortData();
     this.init();
-    // console.log(this.week);
+    console.log(this.weekCourse);
 
     this.getWeek(0);
   },
@@ -139,26 +140,20 @@ export default {
     },
     // 初始化课数(courses)与天数(day)
     init() {
-      this.weeks = []; //周集合
-      this.maxCourseLength = 0;
+      this.weeks = [];
+      // this.maxCourseLength = 0;
       this.weeks = this.weekCourse.map((dayitem, index) => {
         for (const key in dayitem) {
           if (key === "courses") {
-            let max = 0; //
-            //取出一周中最大的课节数及当天的最大课节数
-            for (let j of dayitem[key]) {
-              j.index > this.maxCourseLength && (this.maxCourseLength = j.index); //取一周里哪天课最多
-              j.index > max && (max = j.index); //取当天最大课节值
-            }
-            // console.log("max:", max);
-
-            //如果当天的课节总数小于当天的最大课节值
-            if (dayitem[key].length < max) {
-              //以最大课节值为终点遍历当天课节
-              for (let i = 0; i < max; i++) {
-                //如果下标课节不存在或着与循环的下标不匹配
+            // let max = 0; 
+            // for (let j of dayitem[key]) {
+            //   j.index > this.maxCourseLength && (this.maxCourseLength = j.index);
+            //   j.index > max && (max = j.index);
+            // }
+            if (dayitem[key].length < this.maxCourseLength) {
+              for (let i = 0; i < this.maxCourseLength; i++) {
                 if (!dayitem[key][i] || dayitem[key][i].index != i + 1) {
-                  dayitem[key].splice(i, 0, " "); //填充空课节
+                  dayitem[key].splice(i, 0, " ");
                 }
               }
             }
@@ -239,7 +234,10 @@ export default {
       this.endTime = last_sunday;
       console.log(weekOfDay, last_monday, last_sunday);
     },
-  },
+    class_time(class_index){
+      return this.class_time_list[class_index]
+    }
+  }
 };
 </script>
  
